@@ -3,8 +3,9 @@ import { StatusBar, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeStackNavigator from "./HomeStackNavigator";
-import SettingsStackNavigator from "./SettingsStackNavigator";
+import LoginStackNavigator from "./LoginStackNavigator";
+import InfoStackNavigator from "./InfoStackNavigator";
+import ProfilStackNavigator from "./ProfilStackNavigator";
 import styles from "../theme/styles";
 
 const Tab = createBottomTabNavigator();
@@ -37,8 +38,9 @@ const RootTabNavigator = () => {
               source={require("../assets/ClearBin_App.png")}/>),     
             })}
       >
-        <Tab.Screen name="Informations" component={HomeStackNavigator} />
-        <Tab.Screen name="Profil" component={SettingsStackNavigator} />
+        <Tab.Screen name="Connexion" component={LoginStackNavigator} />
+        <Tab.Screen name="Informations" component={InfoStackNavigator} />
+        <Tab.Screen name="Profil" component={ProfilStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   );
