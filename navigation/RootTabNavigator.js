@@ -3,7 +3,7 @@ import { StatusBar, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import LoginStackNavigator from "./LoginStackNavigator";
+import LoginScreen from "../screens/LoginScreen.js";
 import InfoStackNavigator from "./InfoStackNavigator";
 import ProfilStackNavigator from "./ProfilStackNavigator";
 import styles from "../theme/styles";
@@ -15,16 +15,17 @@ const RootTabNavigator = () => {
     <NavigationContainer>
       <StatusBar barStyle="light-content" backgroundColor="#469F9A" />
       <Tab.Navigator
+        initialRouteName="Connexion" // spécifie que la page de connexion sera affichée en premier
         screenOptions={({ route }) => ({
           // Icons will be different if the tab is focused
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === "Informations") {
               iconName = focused
-                ? "ios-information-circle"
-                : "ios-information-circle-outline";
+                ? "ios-home"
+                : "ios-home-outline";
             } else if (route.name === "Profil") {
-              iconName = focused ? "ios-list" : "ios-list-outline";
+              iconName = focused ? "ios-list" : "ios-person-circle-outline";
             }
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -38,7 +39,6 @@ const RootTabNavigator = () => {
               source={require("../assets/ClearBin_App.png")}/>),     
             })}
       >
-        <Tab.Screen name="Connexion" component={LoginStackNavigator} />
         <Tab.Screen name="Informations" component={InfoStackNavigator} />
         <Tab.Screen name="Profil" component={ProfilStackNavigator} />
       </Tab.Navigator>
