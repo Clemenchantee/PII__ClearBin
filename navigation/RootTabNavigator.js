@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginScreen from "../screens/LoginScreen.js";
 import InfoStackNavigator from "./InfoStackNavigator";
+import InfosSearchStackNavigator from "./InfosSearchStackNavigator";
 import ProfilStackNavigator from "./ProfilStackNavigator";
 import styles from "../theme/styles";
 
@@ -25,7 +26,7 @@ const RootTabNavigator = () => {
                 ? "ios-home"
                 : "ios-home-outline";
             } else if (route.name === "Profil") {
-              iconName = focused ? "ios-list" : "ios-person-circle-outline";
+              iconName = focused ? "ios-person-circle-outline" : "ios-person-circle-outline";
             }
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;

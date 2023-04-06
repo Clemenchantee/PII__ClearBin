@@ -1,6 +1,5 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import InfosScreen from "../screens/InfosScreen";
 import InfosSearchScreen from "../screens/InfosSearchScreen";
 //import { screenOptions } from "../theme/styles";
 
@@ -16,23 +15,18 @@ const screenOptions = {
 };
 
 // Screen stack for home tab
-const InfoStack = createNativeStackNavigator();
+const InfosSearchStack = createNativeStackNavigator();
 
-const InfoStackNavigator = () => {
+const InfosSearchStackNavigator = () => {
   return (
-    <InfoStack.Navigator initialRouteName="Accueil" screenOptions={screenOptions}>
-      <InfoStack.Screen
-        name="Accueil"
-        component={InfosScreen}
-        options={{ title: "Accueil" }}
-      />
-      <InfoStack.Screen
+    <InfosSearchStack.Navigator initialRouteName="InfosSearch" screenOptions={screenOptions}>
+      <InfosSearchStack.Screen
         name="Recherche"
         component={InfosSearchScreen}
         options={{ title: "Recherche" }}
       />
-    </InfoStack.Navigator>
+    </InfosSearchStack.Navigator>
   );
 };
 
-export default InfoStackNavigator;
+export default InfosSearchStackNavigator;

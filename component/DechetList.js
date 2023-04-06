@@ -1,30 +1,30 @@
 import React from "react";
 import { Text, View, StyleSheet, FlatList } from "react-native";
 
-const DechetListe = ({ cocktails, navigation }) => {
-  if (cocktails.length > 0)
+const DechetList = ({ waste, navigation }) => {
+  if (waste.length > 0)
     return (
       <FlatList
-        style={styles.cocktailList}
-        data={cocktails}
-        keyExtractor={(cocktail) => cocktail.id.toString()}
+        style={styles.wasteList}
+        data={wastes}
+        keyExtractor={(waste) => waste.id.toString()}
         renderItem={({ item }) => {
-          return <CocktailItem cocktail={item} navigation={navigation} />;
+          return <wasteItem waste={item} navigation={navigation} />;
         }}
       />
     );
   else
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Nothing to drink yet!</Text>
+        <Text style={styles.text}> Pas de résultats pour ce déchets </Text>
       </View>
     );
 };
 
-export default CocktailList;
+export default DechetList;
 
 const styles = StyleSheet.create({
-  cocktailList: {
+  wasteList: {
     flex: 1,
     marginHorizontal: 10,
   },
