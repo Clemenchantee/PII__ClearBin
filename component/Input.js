@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   inputText: {
-    height: 45,
-    marginLeft: 16,
+    marginTop : 10,
     borderBottomColor: "#FFFFFF",
-    flex: 1,
-    textAlign: 'center'
+    textAlign: 'center', 
+    fontSize: 18,
+    fontStyle: 'italic', 
   },
 })

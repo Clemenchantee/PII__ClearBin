@@ -12,11 +12,11 @@ import { useNavigation } from "@react-navigation/native";
 const renderPoubelle = ({ item }) => {
   //pour mettre des couleurs associées
   let textColor = "#000"; // couleur par défaut
-  if (item.couleur === "Verte") {
+  if (item.bac === "Verte") {
     textColor = "green";
-  } else if (item.couleur === "Grise") {
+  } else if (item.bac === "Grise") {
     textColor = "#5D5D5D";
-  } else if (item.couleur === "Compost") {
+  } else if (item.bac === "Compost") {
     textColor = "#469F9A";
   } 
 
@@ -26,7 +26,7 @@ const renderPoubelle = ({ item }) => {
       <View style={styles.itemHeader}>
         <Ionicons name="ios-trash-bin" size={25} color={textColor} style={styles.icon} />
         <Text style={[styles.itemHeaderText, { color: textColor }]}>
-          Poubelle {item.couleur}
+          Poubelle {item.bac}
         </Text>
       </View>
       <Text style={styles.itemRecyclable}>
@@ -62,32 +62,31 @@ const InfosScreen = () => {
 
   //affichage de la page Acceuil/informations
   return (
-    <ScrollView style={[styles.container]}>
-      <View >
-          <View  style={styles.containerImage}>
-            <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
-              <View style={styles.textContainer}>
-                <Text style={styles.titre}>Bienvenue à Bordeaux</Text>
-              </View>
-            <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
+    <ScrollView style={styles.container}>
+      <View style={styles.containerImage}>
+        <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
+          <View style={styles.textContainer}>
+            <Text style={styles.titre}>Bienvenue à Bordeaux</Text>
           </View>
-        <Text style={styles.soustext}> ClearBin est là pour t'aider dans la gestion de tes déchets !</Text>
-        <TouchableOpacity
-          style={styles.container}
-          onPress={() => {
-            navigation.navigate('Recherche'); }}>
-        <Text style={styles.question}>Clique ici si tu veux savoir comment trier tes déchets</Text>
-      </TouchableOpacity>
-        <Text style={styles.text}>Informations générales </Text>
-          <FlatList
-            data={poubelles} //afficher mes données de la table poubelle
-            renderItem={renderPoubelle}
-            keyExtractor={(item) => item.couleur}
-            contentContainerStyle={styles.flatListContainer}
-          />
+        <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
       </View>
+      <Text style={styles.soustext}> ClearBin est là pour t'aider dans la gestion de tes déchets !</Text>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => {
+          navigation.navigate('Recherche'); }}>
+      <Text style={styles.question}>Clique ici si tu veux savoir comment trier tes déchets</Text>
+      </TouchableOpacity>
+      <Text style={styles.text}>Informations générales </Text>
+      <FlatList
+        data={poubelles} //afficher mes données de la table poubelle
+        renderItem={renderPoubelle}
+        keyExtractor={(item) => item.bac}
+        contentContainerStyle={styles.flatListContainer}
+        nestedScrollEnabled //pour pouvoir scroller la page entière
+      />
     </ScrollView>
-    );
+  );  
 }
 
 export default InfosScreen;

@@ -11,9 +11,6 @@ const InfosSearchScreen = () => {
   const [results, setResults] = useState([]);
   const [rechercheCount, setRechercheCount] = useState(0);
 
-    const searchDechets = async (name) => {
-      setLoading(true);
-
       //requete qui marche sans la couleur de poubelle
       /*
           //requête bdd firestore
@@ -32,6 +29,9 @@ const InfosSearchScreen = () => {
       }
     });*/
     
+    const searchDechets = async (name) => {
+      setLoading(true);
+
       //requête bdd firestore
       const q = query(déchetsCollection, where("nomDéchets", "==", name));
       const querySnapshot = await getDocs(q);
@@ -47,12 +47,12 @@ const InfosSearchScreen = () => {
           const poubelleRef = docdéchets.bac;
           console.log('poubelleRef', poubelleRef)
           // récupère les données de la poubelle
-          const poubelleSnapshot = await getDocs(poubelleRef);
-          console.log('poubelleSnapchot', poubelleSnapshot)
-          const poubelleData = poubelleSnapshot.data();
+          const poubelleDoc = await getDocs(poubelleRef);
+          console.log('poubelleDoc', poubelleDoc)
+          const poubelleData = poubelleDoc.data();          
           console.log('poubelleData', poubelleData)
           // extrait la couleur de la poubelle
-          const poubelleCouleur = poubelleData.couleur;
+          const poubelleCouleur = poubelleData.bac;
           console.log('poubelleCouleur', poubelleCouleur)
           results.push({ description, Poubelle: `couleur: ${poubelleCouleur}` });
           console.log('results2', results)
@@ -62,9 +62,14 @@ const InfosSearchScreen = () => {
       // augmenter le compteur de recherche pour l'afficher dans mes paramètres
       setRechercheCount(rechercheCount + 1);
       console.log('nb',rechercheCount)
-    
-      setResults(results);
       setLoading(false);
+
+      //Afficher qlq chose si pas de correspondance
+      if (results.length === 0) {
+        setResults([{ description: "Nous ne savons pas comment trier ce déchet"}]);
+      } else {
+        setResults(results);
+      }
     };    
 
   return (
@@ -78,7 +83,7 @@ const InfosSearchScreen = () => {
       </View>
       <View style={styles.inputContainer}>
           <View style={styles.iconContainer}>
-            <Ionicons name="search-circle-outline" size={30} color='gray' />
+            <Ionicons name="search-circle-outline" size={40} color='gray' />
           </View>
           <Input
             placeholder="Entrer un nom de déchet"
@@ -86,14 +91,20 @@ const InfosSearchScreen = () => {
             style={styles.input}
           />
       </View>
-    {results.map((item, index) => (
+      {loading ? (
+      <ActivityIndicator style={styles.loading} size="large" color="#0000ff" />
+    ) : results.length === 0 ? (
+      <Text style={styles.noResults}>Pas de résultats, nous ne savons pas comment trier ce déchet.</Text>
+    ) : (
+      results.map((item, index) => (
         <View style={styles.reponses} key={index}>
           <Text style={styles.descReponses}>Poubelle concernée : </Text>
           <Text style={styles.poubelle}>{item.Poubelle}</Text>
           <Text style={styles.descReponses}>Description du déchet : </Text>
           <Text style={styles.description}>{item.description}</Text>
         </View>
-      ))}
+      ))
+    )}
     </View>
   );
 };
@@ -142,8 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    fontSize: 18,
-    marginLeft: 5,
+    fontSize: 25,
   },
   description: {
     fontSize: 20,
