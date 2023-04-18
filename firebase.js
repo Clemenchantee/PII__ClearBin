@@ -22,7 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+//exporter mes collections Firestore
 export const db = getFirestore(app);
-export const usersCollection = collection(db,"users");
 export const déchetsCollection = collection(db,"déchets");
 export const PoubelleCollection = collection(db,"Poubelle");

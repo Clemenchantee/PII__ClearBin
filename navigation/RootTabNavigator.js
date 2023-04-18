@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginScreen from "../screens/LoginScreen.js";
 import InfoStackNavigator from "./InfoStackNavigator";
 import InfosSearchStackNavigator from "./InfosSearchStackNavigator";
-import ProfilStackNavigator from "./ProfilStackNavigator";
+import ParameterStackNavigator from "./ParameterStackNavigator";
 import styles from "../theme/styles";
 
 const Tab = createBottomTabNavigator();
@@ -25,8 +25,8 @@ const RootTabNavigator = () => {
               iconName = focused
                 ? "ios-home"
                 : "ios-home-outline";
-            } else if (route.name === "Profil") {
-              iconName = focused ? "ios-person-circle-outline" : "ios-person-circle-outline";
+            } else if (route.name === "Paramètres") {
+              iconName = focused ? "ios-settings" : "ios-settings-outline";
             }
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -41,7 +41,7 @@ const RootTabNavigator = () => {
             })}
       >
         <Tab.Screen name="Informations" component={InfoStackNavigator} />
-        <Tab.Screen name="Profil" component={ProfilStackNavigator} />
+        <Tab.Screen name="Paramètres" component={ParameterStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   );

@@ -1,7 +1,6 @@
 import React from "react";
-import { Text, View, ScrollView, ActivityIndicator, StyleSheet , FlatList, TouchableOpacity} from "react-native";
+import { Text, View, ScrollView, ActivityIndicator, StyleSheet , FlatList, TouchableOpacity, Image} from "react-native";
 import { useState, useEffect } from 'react';
-import Input from "../component/Input";
 import 'firebase/firestore';
 import { PoubelleCollection } from "../firebase";
 import { db } from "../firebase";
@@ -17,11 +16,13 @@ const renderPoubelle = ({ item }) => {
     textColor = "green";
   } else if (item.couleur === "Grise") {
     textColor = "#5D5D5D";
-  }
+  } else if (item.couleur === "Compost") {
+    textColor = "#469F9A";
+  } 
 
   //informations dans la flatList
   return (
-    <View style={styles.itemContainer} key={item.id}>
+    <View style={styles.itemContainer}>
       <View style={styles.itemHeader}>
         <Ionicons name="ios-trash-bin" size={25} color={textColor} style={styles.icon} />
         <Text style={[styles.itemHeaderText, { color: textColor }]}>
@@ -63,19 +64,25 @@ const InfosScreen = () => {
   return (
     <ScrollView style={[styles.container]}>
       <View >
-        <Text style={[styles.titre]}> Bienvenue à Bordeaux</Text>
+          <View  style={styles.containerImage}>
+            <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
+              <View style={styles.textContainer}>
+                <Text style={styles.titre}>Bienvenue à Bordeaux</Text>
+              </View>
+            <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
+          </View>
         <Text style={styles.soustext}> ClearBin est là pour t'aider dans la gestion de tes déchets !</Text>
         <TouchableOpacity
           style={styles.container}
           onPress={() => {
             navigation.navigate('Recherche'); }}>
-        <Text style={styles.question}>Quels déchets souhaites-tu trier ?</Text>
+        <Text style={styles.question}>Clique ici si tu veux savoir comment trier tes déchets</Text>
       </TouchableOpacity>
         <Text style={styles.text}>Informations générales </Text>
           <FlatList
-            data={poubelles}
+            data={poubelles} //afficher mes données de la table poubelle
             renderItem={renderPoubelle}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.couleur}
             contentContainerStyle={styles.flatListContainer}
           />
       </View>
@@ -86,19 +93,107 @@ const InfosScreen = () => {
 export default InfosScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1},
-  titre:{fontWeight: 'bold', fontSize: 35, textAlign: 'center', marginBottom:5, marginTop :20},
-  soustext: {fontSize: 20, paddingBottom: 10, textAlign: 'center', marginBottom:10, marginLeft: 10, marginRight : 10},
-  text: {fontWeight: 'bold', fontSize: 20, paddingBottom: 10, textAlign: 'center'},
-  question : {textDecorationLine: 'underline', textAlign:'center', fontSize: 20, paddingBottom: 10, marginLeft: 15, marginBottom:10},
+  container: { 
+    flex: 1, 
+    backgroundColor:"#DDF3EF",
+    padding: 10 
+  },
+  containerImage:{
+    backgroundColor: "#DDF3EF",
+    flexDirection: 'row',
+    justifyContent: 'center', 
+    alignItems: 'center',
+    marginTop : 10, 
+    marginRight :20,
+    marginLeft : 20
+  },
+  image:{
+    width: 50, 
+    height: 50
+  },
+  textContainer : {
+    flex : 1
+  },
+  titre:{
+    fontWeight: 'bold', 
+    fontSize: 35, 
+    textAlign: 'center', 
+    marginBottom: 10, 
+    marginTop :5, 
+    color : "#469F9A",
+  },
+  soustext: {
+    fontSize: 20, 
+    paddingBottom: 10, 
+    textAlign: 'center', 
+    marginBottom:10, 
+    padding : 10
+  },
+  text: {
+    fontWeight: 'bold', 
+    fontSize: 20, 
+    paddingBottom: 10,
+    textAlign: 'center',
+    color : "#469F9A"
+  },
+  question : {
+    textDecorationLine: 'underline', 
+    textAlign:'center', 
+    fontStyle: 'italic', 
+    fontSize: 20, 
+    paddingBottom: 10, 
+    marginBottom:10
+  },
   inputContainer: {
-    flexDirection: "row", alignItems: "center", backgroundColor: "#fff", borderWidth: 1, borderColor: "#ccc",
-    borderRadius: 20, paddingLeft: 10, paddingRight: 10, height: 40, marginBottom: 5,},
-  itemContainer:{ justifyContent:'space-around', marginBottom:15, marginLeft :10, marginRight :10,  backgroundColor:'#FFFF', borderRadius:20 },
-  itemHeader:{justifyContent:'center', alignItems:'center', marginBottom :5, marginTop : 10, flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap'},
-  icon: { marginRight: 10,},
-  itemHeaderText:{fontSize: 20, fontWeight: 'bold'},
-  itemRecyclable:{textAlign:'center', fontSize: 18, fontStyle: 'italic', fontWeight: 'bold', marginBottom :5},
-  itemText:{fontSize: 14.5, marginLeft :10, marginRight :10, textAlign: 'center',  marginBottom :5},
-  itemDescription: {fontSize: 16, textDecorationLine: 'underline', textAlign: 'center'},
+    flexDirection: "row", 
+    alignItems: "center", 
+    backgroundColor: "#fff", 
+    paddingLeft: 10, 
+    paddingRight: 10, 
+    height: 40, 
+    marginBottom: 5,
+  },
+  itemContainer:{ 
+    justifyContent:'space-around', 
+    marginBottom:15, 
+    padding:10, 
+    backgroundColor:'#FFFF', 
+    borderRadius:20,
+    borderWidth: 2, 
+    borderColor: "#469F9A", 
+  },
+  itemHeader:{
+    justifyContent:'center',
+    alignItems:'center', 
+    marginBottom :5, 
+    marginTop : 10, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    flexWrap: 'wrap'
+  },
+  icon: { 
+    marginRight: 10,
+  },
+  itemHeaderText:{
+    fontSize: 20, 
+    fontWeight: 'bold'
+  },
+  itemRecyclable:{
+    textAlign:'center', 
+    fontSize: 18, 
+    fontStyle: 'italic', 
+    fontWeight: 'bold', 
+    marginBottom :5
+},
+  itemText:{
+    fontSize: 14.5, 
+    padding: 10,
+    textAlign: 'center',  
+    marginBottom :5
+  },
+  itemDescription: {
+    fontSize: 16, 
+    textDecorationLine: 'underline', 
+    textAlign: 'center'
+  },
 })

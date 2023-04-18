@@ -7,7 +7,7 @@ const screenOptions = {
   headerStyle: {
     backgroundColor: "#469F9A",
   },
-  headerTintColor: "#fff",
+  headerTintColor: "#DDF3EF",
   headerTitleStyle: {
     fontWeight: "bold",
   },
