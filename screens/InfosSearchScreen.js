@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, Image } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import Input from "../component/Input";
 import 'firebase/firestore';
 import { déchetsCollection, PoubelleCollection } from '../firebase';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { db, collection, doc, firebase, getDocs, query, where } from 'firebase/firestore';
+import { useNavigation } from "@react-navigation/native";
 
 const InfosSearchScreen = () => {
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,7 @@ const InfosSearchScreen = () => {
   // const [rechercheCount, setRechercheCount] = useState(0);
   const [name, setName] = useState('');
   const [poubelles, setPoubelles] = useState([]);
+  const navigation = useNavigation();
 
     //requete pour récupérer mes données de la table Poubelle 
     useEffect(() => {
@@ -86,7 +88,15 @@ return (
     {loading ? (
       <ActivityIndicator style={styles.loading} size="large" color="#0000ff" />
     ) : results.length === 0 ? (
-      <Text style={styles.noResults}>Pas de résultats</Text>
+          <TouchableOpacity
+            style={styles.container}
+            onPress={() => {
+              navigation.navigate('AjoutInfos');
+            }}
+            >
+            <Text style={styles.noResults}>Pas de résultats</Text>
+            <Text style={styles.noResults}>Clique ici si tu veux ajouter des déchets</Text>
+          </TouchableOpacity>
     ) : (
       results.map((item, index) => (
         <View style={styles.reponses} key={index}>
