@@ -1,113 +1,117 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ActivityIndicator, Image } from "react-native";
 import Input from "../component/Input";
 import 'firebase/firestore';
 import { déchetsCollection, PoubelleCollection } from '../firebase';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { db, collection, doc, firebase, getDocs, query, where } from 'firebase/firestore';
 
 const InfosSearchScreen = () => {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
-  const [rechercheCount, setRechercheCount] = useState(0);
+  // const [rechercheCount, setRechercheCount] = useState(0);
+  const [name, setName] = useState('');
+  const [poubelles, setPoubelles] = useState([]);
 
-      //requete qui marche sans la couleur de poubelle
-      /*
-          //requête bdd firestore
-    const q = query(déchetsCollection, where("nomDéchets", "==", name));
-    const querySnapshot = await getDocs(q);
-    // Récupérer le document de déchets correspondant au nom recherché
-    const results = [];
-
-    //requête pour trouver les déchets 
-    querySnapshot.forEach((doc) => {
-      const docdéchets = doc.data();
-      const { description, Poubelle, nomDéchets } = docdéchets;
-      if (nomDéchets == name) {
-        const poubelle = docdéchets.bac.couleur; // récupère la couleur du bas associé
-        results.push({ description, Poubelle: `couleur: ${poubelle}` });
-      }
-    });*/
+    //requete pour récupérer mes données de la table Poubelle 
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const poubellesSnapshot = await getDocs(PoubelleCollection);
+          const poubellesData = poubellesSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+          setPoubelles(poubellesData);
+        } catch (error) {
+        }
+      };
+      fetchData();
+    }, []);
     
+    //requête pour rechercher mes déchets avec l'input
     const searchDechets = async (name) => {
       setLoading(true);
+      //pour récupérer le nom du déchet 
+      setName(name);
 
       //requête bdd firestore
       const q = query(déchetsCollection, where("nomDéchets", "==", name));
       const querySnapshot = await getDocs(q);
       const results = [];
-      console.log('results', results)
-    
-      //requête pour trouver les déchets 
-      querySnapshot.forEach(async (doc) => {
+
+      //requête pour trouver les déchets et récupérer l'identifiant de la poubelle associée
+      querySnapshot.forEach((doc) => {
         const docdéchets = doc.data();
-        const { description, Poubelle, nomDéchets } = docdéchets;
-        if (nomDéchets === name) {
-          // récupère la référence à la poubelle
-          const poubelleRef = docdéchets.bac;
-          console.log('poubelleRef', poubelleRef)
-          // récupère les données de la poubelle
-          const poubelleDoc = await getDocs(poubelleRef);
-          console.log('poubelleDoc', poubelleDoc)
-          const poubelleData = poubelleDoc.data();          
-          console.log('poubelleData', poubelleData)
-          // extrait la couleur de la poubelle
-          const poubelleCouleur = poubelleData.bac;
-          console.log('poubelleCouleur', poubelleCouleur)
-          results.push({ description, Poubelle: `couleur: ${poubelleCouleur}` });
-          console.log('results2', results)
+        const { description, nomDéchets } = docdéchets;
+        const poubelleRef = docdéchets.bac;//récupère la référence dans la table déchets
+        const poubelleId = poubelleRef.id; //récupère l'id dans la référence dans la table déchet
+        
+        // rechercher la poubelle correspondante dans la liste des poubelles
+        const poubelle = poubelles.find((poubelle) => poubelle.id === poubelleId);
+        console.log('poub',poubelle)
+  
+        if (poubelle) {
+          const poubelleCouleur = poubelle.bac;
+          results.push({ name, description, poubelleCouleur});
+        } else {
+          console.log(`La poubelle avec l'id ${poubelleId} n'a pas été trouvée.`);
         }
       });
-    
+
       // augmenter le compteur de recherche pour l'afficher dans mes paramètres
-      setRechercheCount(rechercheCount + 1);
-      console.log('nb',rechercheCount)
+      /*setRechercheCount(rechercheCount + 1);
+      console.log('nb',rechercheCount)*/
       setLoading(false);
+      setResults(results);
+ }
+    
 
-      //Afficher qlq chose si pas de correspondance
-      if (results.length === 0) {
-        setResults([{ description: "Nous ne savons pas comment trier ce déchet"}]);
-      } else {
-        setResults(results);
-      }
-    };    
-
-  return (
-    <View style={styles.container}>
-      <View  style={styles.containerImage}>
-            <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
-              <View style={styles.textContainer}>
-              <Text style={styles.question}>Quels déchets souhaites-tu trier ?</Text>
-              </View>
-            <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
+return (
+  <View style={styles.container}>
+    <View  style={styles.containerImage}>
+      <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
+      <View style={styles.textContainer}>
+        <Text style={styles.question}>Quels déchets souhaites-tu trier ?</Text>
       </View>
-      <View style={styles.inputContainer}>
-          <View style={styles.iconContainer}>
-            <Ionicons name="search-circle-outline" size={40} color='gray' />
-          </View>
-          <Input
-            placeholder="Entrer un nom de déchet"
-            onSubmit={searchDechets}
-            style={styles.input}
-          />
+      <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
+    </View>
+    <View style={styles.inputContainer}>
+      <View style={styles.iconContainer}>
+        <Ionicons name="search-circle-outline" size={40} color='gray' />
       </View>
-      {loading ? (
+      <Input
+        placeholder="Entrer un nom de déchet"
+        onSubmit={searchDechets}
+        style={styles.input}
+      />
+    </View>
+    {loading ? (
       <ActivityIndicator style={styles.loading} size="large" color="#0000ff" />
     ) : results.length === 0 ? (
-      <Text style={styles.noResults}>Pas de résultats, nous ne savons pas comment trier ce déchet.</Text>
+      <Text style={styles.noResults}>Pas de résultats</Text>
     ) : (
       results.map((item, index) => (
         <View style={styles.reponses} key={index}>
-          <Text style={styles.descReponses}>Poubelle concernée : </Text>
-          <Text style={styles.poubelle}>{item.Poubelle}</Text>
-          <Text style={styles.descReponses}>Description du déchet : </Text>
-          <Text style={styles.description}>{item.description}</Text>
+          <Text style={styles.nomdéchet}>Déchet : {name} </Text>
+          {item.description ? (
+            <>
+              <View style={styles.itemHeader}>
+                <Ionicons name="ios-trash-bin" size={25} color={'#0E5CAD'} style={styles.icon} />
+                <Text style={styles.PoubelleConcernee}>Poubelle concernée : </Text>
+              </View>
+              <Text style={styles.poubelle}>{item.poubelleCouleur}</Text>
+              <Text style={styles.descReponses}>Description du déchet : </Text>
+              <Text style={styles.description}>{item.description}</Text>
+            </>
+          ) : (
+            <Text style={styles.noResults}>Nous ne savons pas comment trier ce déchet</Text>
+          )}
         </View>
       ))
     )}
-    </View>
-  );
+  </View>
+);
 };
+
+export default InfosSearchScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -167,11 +171,41 @@ const styles = StyleSheet.create({
   },
   descReponses: {
     fontSize: 20,
-    fontStyle: "italic",
     textAlign: "center",
-    marginBottom: 1
+    marginBottom: 1, 
+    textDecorationLine : 'underline',
+    color : "#0E5CAD"
   }, 
-  
+  noResults : {
+    textAlign: "center",
+    fontSize: 20,
+    marginTop: 10
+  }, 
+  nomdéchet :{
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 10, 
+    marginBottom : 10, 
+    fontWeight: 'bold', 
+    color : "#0E5CAD"
+  }, 
+  itemHeader:{
+    justifyContent:'center',
+    alignItems:'center', 
+    marginBottom :5, 
+    marginTop : 10, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    flexWrap: 'wrap'
+  },
+  icon: { 
+    marginRight: 10,
+  },
+  PoubelleConcernee : {
+    fontSize: 20,
+    textAlign: "center",
+    marginBottom: 1, 
+    textDecorationLine : 'underline',
+    color : "#0E5CAD"
+  },
 });
-
-export default InfosSearchScreen;

@@ -54,21 +54,9 @@ const ParameterScreen = () => {
         <Button title="Changer de ville" onPress={handleSubmit} />
       </View>
 
-          {/* Ajouter les utilisateurs mais j'en ai pas besoin finalement
-      <View style={styles.paragraphes}>
-      <Text style={styles.titre2}>Informations sur le profil : </Text>
-        {poubelles.map((user, index) => (
-        <View key={index}>
-          <Text>{user.nom}</Text>
-          <Text>{user.prenom}</Text>
-          <Text>{user.mail}</Text>
-        </View>       
-        ))}
-      </View> */}
-
       <View style={styles.paragraphes}>
         <Text style={styles.titre2}>Mon impact </Text>
-        <Text>Nombre de recherches effectuées : {rechercheCount}</Text>
+        <Text>Merci de trier vos déchets ! C'est une action importante pour l'environnement et cela contribue à un avenir plus durable. Bravo à vous !</Text>
       </View>
       
       <View style={styles.paragraphes}>

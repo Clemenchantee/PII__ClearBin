@@ -3,9 +3,8 @@ import { StatusBar, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import LoginScreen from "../screens/LoginScreen.js";
 import InfoStackNavigator from "./InfoStackNavigator";
-import InfosSearchStackNavigator from "./InfosSearchStackNavigator";
+import MapsStackNavigator from "./MapsStackNavigator";
 import ParameterStackNavigator from "./ParameterStackNavigator";
 import styles from "../theme/styles";
 
@@ -27,6 +26,8 @@ const RootTabNavigator = () => {
                 : "ios-home-outline";
             } else if (route.name === "Paramètres") {
               iconName = focused ? "ios-settings" : "ios-settings-outline";
+            } else if (route.name === "Carte") {
+              iconName = focused ? "ios-map" : "ios-map-outline";
             }
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -41,6 +42,7 @@ const RootTabNavigator = () => {
             })}
       >
         <Tab.Screen name="Informations" component={InfoStackNavigator} />
+        <Tab.Screen name="Carte" component={MapsStackNavigator} />
         <Tab.Screen name="Paramètres" component={ParameterStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>

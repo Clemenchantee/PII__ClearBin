@@ -36,6 +36,10 @@ const renderPoubelle = ({ item }) => {
         <Text style={styles.itemDescription}>Comment trier ?</Text> {' '}
         {item.FormeTri}
       </Text>
+      <Text style={styles.itemText}>
+        <Text style={styles.itemDescription}>Que mettre dans cette poubelle ?</Text> {' '}
+        {item.contenant}
+      </Text>
       <Text style={styles.itemDescription}>Description :</Text>
       <Text style={styles.itemText}>{item.description}</Text>
     </View>
@@ -47,7 +51,7 @@ const InfosScreen = () => {
   const [poubelles, setPoubelles] = useState([]);
   const navigation = useNavigation();
 
-  //requete pour récupérer et afficher mes données 
+  //requete pour récupérer mes données de la table Poubelle 
     useEffect(() => {
       const fetchData = async () => {
         try {
