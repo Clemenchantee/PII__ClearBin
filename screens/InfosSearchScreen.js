@@ -10,7 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 const InfosSearchScreen = () => {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
-  // const [rechercheCount, setRechercheCount] = useState(0);
   const [name, setName] = useState('');
   const [poubelles, setPoubelles] = useState([]);
   const navigation = useNavigation();
@@ -58,9 +57,6 @@ const InfosSearchScreen = () => {
         }
       });
 
-      // augmenter le compteur de recherche pour l'afficher dans mes paramètres
-      /*setRechercheCount(rechercheCount + 1);
-      console.log('nb',rechercheCount)*/
       setLoading(false);
       setResults(results);
  }
@@ -90,9 +86,7 @@ return (
     ) : results.length === 0 ? (
           <TouchableOpacity
             style={styles.container}
-            onPress={() => {
-              navigation.navigate('AjoutInfos');
-            }}
+            onPress={() => { navigation.navigate('AjouterInfos'); }}
             >
             <Text style={styles.noResults}>Pas de résultats</Text>
             <Text style={styles.noResults}>Clique ici si tu veux ajouter des déchets</Text>

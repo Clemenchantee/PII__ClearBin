@@ -26,7 +26,7 @@ const InfosSearchStackNavigator = () => {
         options={{ title: "Recherche" }}
       />
       <InfosSearchStack.Screen
-        name="AjoutInfos"
+        name="AjouterInfos"
         component={AddInfosScreen}
         options={{ title: "AjoutInfos" }}
       />

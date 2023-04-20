@@ -26,3 +26,4 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const déchetsCollection = collection(db,"déchets");
 export const PoubelleCollection = collection(db,"Poubelle");
+export const LocalisationCollection = collection(db,"Localisation");
