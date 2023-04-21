@@ -47,7 +47,6 @@ const InfosSearchScreen = () => {
         
         // rechercher la poubelle correspondante dans la liste des poubelles
         const poubelle = poubelles.find((poubelle) => poubelle.id === poubelleId);
-        console.log('poub',poubelle)
   
         if (poubelle) {
           const poubelleCouleur = poubelle.bac;

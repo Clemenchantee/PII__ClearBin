@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     paddingBottom: 10,
     textAlign: 'center',
-    color : "#469F9A"
+    color : "#0E5CAD"
   },
   question : {
     textDecorationLine: 'underline', 
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFF', 
     borderRadius:20,
     borderWidth: 2, 
-    borderColor: "#469F9A", 
+    borderColor: "#0E5CAD", 
   },
   itemHeader:{
     justifyContent:'center',

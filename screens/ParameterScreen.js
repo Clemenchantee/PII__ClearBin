@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Alert, Image, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Alert, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useState, useEffect } from 'react';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import 'firebase/firestore';
@@ -65,7 +65,8 @@ const ParameterScreen = ({navigation}) => {
   
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+    <View>
         <View  style={styles.containerImage}>
               <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
               <View style={styles.textContainer}>
@@ -80,7 +81,7 @@ const ParameterScreen = ({navigation}) => {
       
       <View style={styles.paragraphes}>
       <View style={styles.icon}>
-        <Ionicons name="home-outline" size={30} color='#469F9A' />
+        <Ionicons name="add-circle-outline" size={30} color='#0E5CAD' />
         <Text style={styles.titre2}>Ajouter une ville </Text>
       </View>  
         <View style={styles.inputContainer}>
@@ -98,7 +99,7 @@ const ParameterScreen = ({navigation}) => {
 
       <View style={styles.paragraphes}>
         <View style={styles.icon}>
-          <Ionicons name="business-outline" size={30} color="#469F9A" />
+          <Ionicons name="business-outline" size={30} color='#0E5CAD' />
           <Text style={styles.titre2}>Vos villes</Text>
         </View>
         <Text style={styles.text} >Vous pouvez changer de ville en cliquant sur la ville souhaitée : </Text>
@@ -113,7 +114,7 @@ const ParameterScreen = ({navigation}) => {
 
       <View style={styles.paragraphes}>
         <View  style={styles.icon}>
-          <Ionicons name="leaf-outline" size={30} color='#469F9A' />
+          <Ionicons name="leaf-outline" size={30} color='#0E5CAD' />
           <Text style={styles.titre2}>Mon impact </Text>
         </View>
         <Text style={styles.text}>Merci de trier vos déchets ! C'est une action importante pour l'environnement et cela contribue à un avenir plus durable. Bravo à vous !</Text>
@@ -121,7 +122,7 @@ const ParameterScreen = ({navigation}) => {
       
       <View style={styles.paragraphes}>
         <View  style={styles.icon}> 
-          <Ionicons name="folder-outline" size={30} color='#469F9A' />
+          <Ionicons name="folder-outline" size={30} color='#0E5CAD' />
           <Text style={styles.titre2}>Mentions légales </Text>
         </View>
         <Text style={styles.text}>Made by Clémence Monnier for PII project</Text>
@@ -129,6 +130,7 @@ const ParameterScreen = ({navigation}) => {
         <Text style={styles.text}>Elle n'est pas commercialisable.</Text>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     paddingBottom: 5,
-    color : "#469F9A",
+    color:"#0E5CAD",
     marginLeft : 5,
   }, 
   paragraphes:{
