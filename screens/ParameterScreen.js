@@ -1,17 +1,18 @@
 import React from 'react';
-import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Alert, Image, TouchableOpacity } from "react-native";
 import { useState, useEffect } from 'react';
+import Ionicons from "react-native-vector-icons/Ionicons";
 import 'firebase/firestore';
-import { LocalisationCollection } from "../firebase";
 import Input from "../component/Input"; 
 import { db } from "../firebase";
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 
-const ParameterScreen = () => {
+const ParameterScreen = ({navigation}) => {
   const [villes, setVilles] = useState([]);
   //nouvelle ville dans la base de données
   const [newVille, setNewVille] = useState("");
   const [villeExistante, setVilleExistante] = useState(false);
+  const [villeSelectionnee, setVilleSelectionnee] = useState("");
   const localisationRef = collection(db, "Localisation");
 
   //requête pour récupérer la base de données
@@ -34,6 +35,7 @@ const ParameterScreen = () => {
       // Vérifier si la ville entrée par l'utilisateur existe déjà dans le tableau
       if (villes.includes(newVille)) {
         setVilleExistante(true);
+        Alert.alert("Ville déjà ajoutée", "Cette ville a déjà été ajoutée.");
         return;
       }
   
@@ -56,6 +58,12 @@ const ParameterScreen = () => {
     setNewVille(text);
   };
 
+  // pour afficher la ville cliquée 
+  const handleVilleClick = (ville) => {
+    setVilleSelectionnee(ville);
+  };
+  
+
   return (
     <View style={styles.container}>
         <View  style={styles.containerImage}>
@@ -63,16 +71,22 @@ const ParameterScreen = () => {
               <View style={styles.textContainer}>
                   {villes.length > 0 && (
                   <Text style={styles.titre}>
-                    Bienvenue à {villes[villes.length - 1]}
-                  </Text>
+                  Bienvenue à {villeSelectionnee ? villeSelectionnee : villes[villes.length - 1]}
+                </Text>                
                   )}
               </View>
               <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
         </View>
       
       <View style={styles.paragraphes}>
+      <View style={styles.icon}>
+        <Ionicons name="home-outline" size={30} color='#469F9A' />
         <Text style={styles.titre2}>Ajouter une ville </Text>
-        <View>
+      </View>  
+        <View style={styles.inputContainer}>
+          <View style={styles.iconContainer}>
+            <Ionicons name="home-outline" size={35} color='gray' />
+          </View>
           <Input
               placeholder="Ajoutez une ville"
               onSubmit={handleSubmit}
@@ -83,24 +97,36 @@ const ParameterScreen = () => {
       </View>
 
       <View style={styles.paragraphes}>
-        <Text style={styles.titre2} >Vos villes</Text>
-              <View>
-                   {villes.map((ville, index) => (
-                    <Text key={index}> {ville}</Text>
-                  ))}
-              </View>
+        <View style={styles.icon}>
+          <Ionicons name="business-outline" size={30} color="#469F9A" />
+          <Text style={styles.titre2}>Vos villes</Text>
+        </View>
+        <Text style={styles.text} >Vous pouvez changer de ville en cliquant sur la ville souhaitée : </Text>
+        <View>
+          {villes.map((ville, index) => (
+            <TouchableOpacity key={index} onPress={() => handleVilleClick(ville)}>
+              <Text  style={styles.villeSelect}> {"\u2022"} {ville}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
       <View style={styles.paragraphes}>
-        <Text style={styles.titre2}>Mon impact </Text>
-        <Text>Merci de trier vos déchets ! C'est une action importante pour l'environnement et cela contribue à un avenir plus durable. Bravo à vous !</Text>
+        <View  style={styles.icon}>
+          <Ionicons name="leaf-outline" size={30} color='#469F9A' />
+          <Text style={styles.titre2}>Mon impact </Text>
+        </View>
+        <Text style={styles.text}>Merci de trier vos déchets ! C'est une action importante pour l'environnement et cela contribue à un avenir plus durable. Bravo à vous !</Text>
       </View>
       
       <View style={styles.paragraphes}>
-        <Text style={styles.titre2}>Mentions légales </Text>
-        <Text>Made by Clémence Monnier for PII project</Text>
-        <Text>Cette application a été conçue dans le cadre d'un projet à l'ENSC</Text>
-        <Text>Elle n'est pas commercialisable.</Text>
+        <View  style={styles.icon}> 
+          <Ionicons name="folder-outline" size={30} color='#469F9A' />
+          <Text style={styles.titre2}>Mentions légales </Text>
+        </View>
+        <Text style={styles.text}>Made by Clémence Monnier for PII project</Text>
+        <Text style={styles.text}>Cette application a été conçue dans le cadre d'un projet à l'ENSC</Text>
+        <Text style={styles.text}>Elle n'est pas commercialisable.</Text>
       </View>
     </View>
   );
@@ -113,7 +139,6 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: "#DDF3EF", 
     padding: 10, 
-    justifyContent: 'space-around',
   },
   containerImage:{
     backgroundColor: "#DDF3EF",
@@ -150,11 +175,39 @@ const styles = StyleSheet.create({
   titre2:{
     fontWeight: "bold",
     fontSize: 20,
-    paddingBottom: 10,
-    color : "#469F9A"
+    paddingBottom: 5,
+    color : "#469F9A",
+    marginLeft : 5,
   }, 
   paragraphes:{
     marginTop : 5, 
-    marginBottom : 5,
+    marginBottom : 10,
   },
+  villeSelect : {
+    marginLeft : 10 ,
+    fontSize : 16, 
+    textDecorationLine: 'underline',
+    fontStyle : "italic" 
+  }, 
+  text : {
+    fontSize : 15,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginHorizontal: 20,
+    marginVertical: 10,
+    elevation: 2,
+  },
+  iconContainer: {
+    width: 50,
+    alignItems: 'center',
+  },
+  icon : {
+    flexDirection: 'row',
+  }
 });

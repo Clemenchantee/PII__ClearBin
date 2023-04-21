@@ -6,13 +6,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import InfoStackNavigator from "./InfoStackNavigator";
 import MapsStackNavigator from "./MapsStackNavigator";
 import ParameterStackNavigator from "./ParameterStackNavigator";
-import styles from "../theme/styles";
+import { VilleContext, VilleProvider } from "../component/VilleContext";
 
 const Tab = createBottomTabNavigator();
 
 const RootTabNavigator = () => {
   return (
-    <NavigationContainer>
+    <VilleProvider>
+       <NavigationContainer>
       <StatusBar barStyle="light-content" backgroundColor="#469F9A" />
       <Tab.Navigator
         initialRouteName="Connexion" // spécifie que la page de connexion sera affichée en premier
@@ -46,6 +47,7 @@ const RootTabNavigator = () => {
         <Tab.Screen name="Paramètres" component={ParameterStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
+    </VilleProvider>
   );
 };
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InfosSearchScreen from "../screens/InfosSearchScreen";
-import AddInfosScreen from "../screens/AddInfosScreen";
 
 const screenOptions = {
   headerStyle: {
@@ -24,11 +23,6 @@ const InfosSearchStackNavigator = () => {
         name="Recherche"
         component={InfosSearchScreen}
         options={{ title: "Recherche" }}
-      />
-      <InfosSearchStack.Screen
-        name="AjouterInfos"
-        component={AddInfosScreen}
-        options={{ title: "AjoutInfos" }}
       />
     </InfosSearchStack.Navigator>
   );

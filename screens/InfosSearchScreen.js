@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Image } from "react-native";
 import Input from "../component/Input";
 import 'firebase/firestore';
 import { déchetsCollection, PoubelleCollection } from '../firebase';
@@ -84,13 +84,7 @@ return (
     {loading ? (
       <ActivityIndicator style={styles.loading} size="large" color="#0000ff" />
     ) : results.length === 0 ? (
-          <TouchableOpacity
-            style={styles.container}
-            onPress={() => { navigation.navigate('AjouterInfos'); }}
-            >
             <Text style={styles.noResults}>Pas de résultats</Text>
-            <Text style={styles.noResults}>Clique ici si tu veux ajouter des déchets</Text>
-          </TouchableOpacity>
     ) : (
       results.map((item, index) => (
         <View style={styles.reponses} key={index}>

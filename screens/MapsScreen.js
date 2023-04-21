@@ -1,12 +1,17 @@
 import React from "react";
-import { Text, View, Button, Image, StyleSheet} from "react-native";
+import { Text, View, Button, Image, StyleSheet, ScrollView} from "react-native";
 import { useState, useEffect } from 'react';
 import 'firebase/firestore';
 import { getDocs } from "firebase/firestore";
+import ParameterScreen from "./ParameterScreen";
+import { LocalisationCollection } from "../firebase";
 import MapView, { Marker } from 'react-native-maps';
 
 const MapsScreen = () => {
+  
+
   return (
+    <ScrollView>
     <View style={styles.container}>
       <View style={styles.containerImage}>
         <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
@@ -16,9 +21,14 @@ const MapsScreen = () => {
         <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
       </View>
 
-      <Text>Je n'arrive pas à mettre la maps et je n'ai pas le temps</Text>
+      <Text style={styles.textDescription}>Voici la carte des poubelles de verre à Bordeaux </Text>
+
+      <View style={styles.containerImage}>
+        <Image style={styles.imageCarte} source={require('../assets/poubelleVerre.png')} />
+      </View>
 
       <MapView
+       // Tentative d'insérer une carte maps mais pas le temps d'aller jusqu'au bout du processus
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 37.78825,
@@ -32,11 +42,12 @@ const MapsScreen = () => {
             latitude: 37.78825,
             longitude: -122.4324,
           }}
-          title="My Marker"
-          description="Some description"
+          title="Ma maps"
+          description="Bordeaux"
         />
       </MapView>
     </View>
+    </ScrollView>
   );
 };
 
@@ -50,7 +61,6 @@ const styles = StyleSheet.create({
     padding: 10 
   },
   containerImage:{
-    backgroundColor: "#DDF3EF",
     flexDirection: 'row',
     justifyContent: 'center', 
     alignItems: 'center',
@@ -72,6 +82,17 @@ const styles = StyleSheet.create({
     marginBottom: 10, 
     marginTop :5, 
     color : "#469F9A",
+  }, 
+  textDescription:{
+    fontSize : 20, 
+    textAlign: 'center', 
+  },
+  imageCarte :{
+    height : 550, 
+    width: 350,
+    borderRadius : 5, 
+    borderWidth: 5, 
+    borderColor: "#469F9A", 
   }
 });
 
