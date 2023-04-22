@@ -36,7 +36,7 @@ const ParameterScreen = ({navigation}) => {
       // Vérifier si la ville entrée par l'utilisateur existe déjà dans le tableau
       if (villes.includes(newVille)) {
         setVilleExistante(true);
-        Alert.alert("Ville déjà ajoutée", "Cette ville a déjà été ajoutée.");
+        Alert.alert("Alerte", "Cette ville a déjà été ajoutée.");
         return;
       }
   

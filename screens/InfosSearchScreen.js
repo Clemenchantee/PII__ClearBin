@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, Image } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import Input from "../component/Input";
 import 'firebase/firestore';
 import { déchetsCollection, PoubelleCollection } from '../firebase';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { db, collection, doc, firebase, getDocs, query, where } from 'firebase/firestore';
+import { getDocs, query, where } from 'firebase/firestore';
 import { useNavigation } from "@react-navigation/native";
 
 const InfosSearchScreen = () => {
@@ -86,24 +86,42 @@ return (
     {loading ? (
       <ActivityIndicator style={styles.loading} size="large" color="#0000ff" />
     ) : results.length === 0 ? (
-            <Text style={styles.noResults}>Pas de résultats</Text>
+            <TouchableOpacity
+            style={styles.container}
+            onPress={() => {
+            navigation.navigate('Ajout'); }}>
+               <Text style={styles.noResults}>Pas de résultats</Text>
+               <Text style={styles.noResults}>Si tu ne trouves pas ton déchet mais que tu sais comment le trier clique ici ! </Text>
+            </TouchableOpacity>
     ) : (
       results.map((item, index) => (
         <View style={styles.reponses} key={index}>
-          <Text style={styles.nomdéchet}>Déchet : {name} </Text>
+          <Text style={styles.nomdéchet}>{name} </Text>
           {item.description ? (
             <>
-              <View style={styles.itemHeader}>
-                <Ionicons name="ios-trash-bin" size={25} color={'#0E5CAD'} style={styles.icon} />
-                <Text style={styles.PoubelleConcernee}>Poubelle concernée : </Text>
+              <View style={styles.bord}>
+                  <View style={styles.itemHeader}>
+                    <Ionicons name="trash-outline" size={25} color={'#0E5CAD'} style={styles.icon} />
+                    <Text style={styles.descReponses}>Poubelle concernée </Text>                
+                  </View>
+                <Text style={styles.description}>{item.poubelleCouleur}</Text>
               </View>
-              <Text style={styles.poubelle}>{item.poubelleCouleur}</Text>
-              <Text style={styles.descReponses}>Description du déchet : </Text>
-              <Text style={styles.description}>{item.description}</Text>
-              <Text style={styles.descReponses}>Rappel sortie : </Text>
-              <Text style={styles.description}>{item.poubelleJour}</Text>
-              <Text style={styles.description}>{item.poubelleHeure}</Text>
-              <Text style={styles.description}>{item.poubelleConseil}</Text>
+              <View style={styles.bord}>
+                <View style={styles.itemHeader}>
+                  <Ionicons name="list-outline" size={25} color={'#0E5CAD'} style={styles.icon} />
+                  <Text style={styles.descReponses}> Description du déchet </Text>
+                </View>
+                <Text style={styles.description}>{item.description}</Text>
+              </View>
+              <View style={styles.bord}>
+                <View style={styles.itemHeader}>
+                  <Ionicons name="time-outline" size={25} color={'#0E5CAD'} style={styles.icon} />
+                  <Text style={styles.descReponses}> Rappel sortie </Text>
+                </View>
+                <Text style={styles.sortie}>{item.poubelleJour}</Text>
+                <Text style={styles.sortie}>{item.poubelleHeure}</Text>
+                <Text style={styles.sortie}>{item.poubelleConseil}</Text>
+              </View>
             </>
           ) : (
             <Text style={styles.noResults}>Nous ne savons pas comment trier ce déchet</Text>
@@ -166,27 +184,22 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 20,
     textAlign: "center",
-    marginBottom: 10
-  },
-  poubelle: {
-    fontSize: 20,
-    textAlign: "center",
-    marginBottom: 10
+    marginBottom: 5
   },
   descReponses: {
     fontSize: 20,
     textAlign: "center",
     marginBottom: 1, 
-    textDecorationLine : 'underline',
     color : "#0E5CAD"
   }, 
   noResults : {
     textAlign: "center",
     fontSize: 20,
-    marginTop: 10
+    marginTop: 10, 
+    textDecorationLine : 'underline'
   }, 
   nomdéchet :{
-    fontSize: 20,
+    fontSize: 30,
     textAlign: "center",
     marginTop: 10, 
     marginBottom : 10, 
@@ -204,12 +217,18 @@ const styles = StyleSheet.create({
   },
   icon: { 
     marginRight: 10,
-  },
-  PoubelleConcernee : {
+  }, 
+  sortie : {
     fontSize: 20,
     textAlign: "center",
-    marginBottom: 1, 
-    textDecorationLine : 'underline',
-    color : "#0E5CAD"
-  },
+    marginBottom : 5
+  }, 
+  bord : {
+    borderWidth : 2, 
+    borderRadius : 10, 
+    borderColor : "#469F9A", 
+    marginLeft : 25, 
+    marginRight : 25, 
+    marginBottom : 10, 
+  }
 });

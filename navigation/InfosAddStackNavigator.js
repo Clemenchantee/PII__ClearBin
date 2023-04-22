@@ -1,6 +1,5 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import InfosSearchScreen from "../screens/InfosSearchScreen";
 import InfosAddScreen from "../screens/InfosAddScreen";
 
 const screenOptions = {
@@ -15,23 +14,18 @@ const screenOptions = {
 };
 
 // Screen stack for home tab
-const InfosSearchStack = createNativeStackNavigator();
+const InfosAddStack = createNativeStackNavigator();
 
-const InfosSearchStackNavigator = () => {
+const InfosAddStackNavigator = () => {
   return (
-    <InfosSearchStack.Navigator initialRouteName="InfosSearch" screenOptions={screenOptions}>
-      <InfosSearchStack.Screen
-        name="Recherche"
-        component={InfosSearchScreen}
-        options={{ title: "Recherche" }}
-      />
-      <InfosSearchStack.Screen
+    <InfosAddStack.Navigator initialRouteName="InfosAdd" screenOptions={screenOptions}>
+      <InfosAddStack.Screen
         name="Ajout"
         component={InfosAddScreen}
         options={{ title: "Ajouter des déchets" }}
       />
-    </InfosSearchStack.Navigator>
+    </InfosAddStack.Navigator>
   );
 };
 
-export default InfosSearchStackNavigator;
+export default InfosAddStackNavigator;

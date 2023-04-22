@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import InfosScreen from "../screens/InfosScreen";
 import InfosSearchScreen from "../screens/InfosSearchScreen";
-//import { screenOptions } from "../theme/styles";
+import InfosAddScreen from "../screens/InfosAddScreen";
 
 const screenOptions = {
   headerStyle: {
@@ -30,6 +30,11 @@ const InfoStackNavigator = () => {
         name="Recherche"
         component={InfosSearchScreen}
         options={{ title: "Recherche" }}
+      />
+      <InfoStack.Screen
+        name="Ajout"
+        component={InfosAddScreen}
+        options={{ title: "Ajouter des déchets" }}
       />
     </InfoStack.Navigator>
   );

@@ -1,7 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ParameterScreen from "../screens/ParameterScreen";
-import MapsScreen from "../screens/MapsScreen";
 
 const screenOptions = {
   headerStyle: {

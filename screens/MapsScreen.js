@@ -1,11 +1,6 @@
 import React from "react";
 import { Text, View, Image, StyleSheet, ScrollView} from "react-native";
-import { useState, useEffect } from 'react';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import 'firebase/firestore';
-import { getDocs } from "firebase/firestore";
-import ParameterScreen from "./ParameterScreen";
-import { LocalisationCollection } from "../firebase";
 import MapView, { Marker } from 'react-native-maps';
 
 const MapsScreen = () => {

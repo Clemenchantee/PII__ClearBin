@@ -3,8 +3,7 @@ import { Text, View, ScrollView, ActivityIndicator, StyleSheet , FlatList, Touch
 import { useState, useEffect } from 'react';
 import 'firebase/firestore';
 import { PoubelleCollection } from "../firebase";
-import { db } from "../firebase";
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { getDocs } from 'firebase/firestore';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -24,7 +23,7 @@ const renderPoubelle = ({ item }) => {
   return (
     <View style={styles.itemContainer}>
       <View style={styles.itemHeader}>
-        <Ionicons name="ios-trash-bin" size={25} color={textColor} style={styles.icon} />
+        <Ionicons name="trash-outline" size={25} color={textColor} style={styles.icon} />
         <Text style={[styles.itemHeaderText, { color: textColor }]}>
           Poubelle {item.bac}
         </Text>
@@ -186,25 +185,24 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   itemHeaderText:{
-    fontSize: 20, 
+    fontSize: 24, 
     fontWeight: 'bold'
   },
   itemRecyclable:{
     textAlign:'center', 
-    fontSize: 18, 
+    fontSize: 20, 
     fontStyle: 'italic', 
     fontWeight: 'bold', 
     marginBottom :5
 },
   itemText:{
-    fontSize: 14.5, 
+    fontSize: 16, 
     padding: 10,
     textAlign: 'center',  
-    marginBottom :5
   },
   itemDescription: {
-    fontSize: 16, 
-    textDecorationLine: 'underline', 
-    textAlign: 'center'
+    fontSize: 18, 
+    fontWeight : 'bold',
+    textAlign: 'center',
   },
 })

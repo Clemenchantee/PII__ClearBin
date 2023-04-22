@@ -6,13 +6,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import InfoStackNavigator from "./InfoStackNavigator";
 import MapsStackNavigator from "./MapsStackNavigator";
 import ParameterStackNavigator from "./ParameterStackNavigator";
-import { VilleContext, VilleProvider } from "../component/VilleContext";
 
 const Tab = createBottomTabNavigator();
 
 const RootTabNavigator = () => {
   return (
-    <VilleProvider>
        <NavigationContainer>
       <StatusBar barStyle="light-content" backgroundColor="#469F9A" />
       <Tab.Navigator
@@ -47,7 +45,6 @@ const RootTabNavigator = () => {
         <Tab.Screen name="Paramètres" component={ParameterStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
-    </VilleProvider>
   );
 };
 
