@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, View, Button, Image, StyleSheet, ScrollView} from "react-native";
+import { Text, View, Image, StyleSheet, ScrollView} from "react-native";
 import { useState, useEffect } from 'react';
+import Ionicons from "react-native-vector-icons/Ionicons";
 import 'firebase/firestore';
 import { getDocs } from "firebase/firestore";
 import ParameterScreen from "./ParameterScreen";
@@ -21,7 +22,10 @@ const MapsScreen = () => {
         <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
       </View>
 
-      <Text style={styles.textDescription}>Voici la carte des poubelles de verre à Bordeaux </Text>
+      <View  style={styles.icon}> 
+          <Ionicons name="location-outline" size={30} color='#0E5CAD' />
+          <Text style={styles.textDescription}>Point de collecte de verre à Bordeaux</Text>
+        </View>
 
       <View style={styles.containerImage}>
         <Image style={styles.imageCarte} source={require('../assets/poubelleVerre.png')} />
@@ -86,13 +90,18 @@ const styles = StyleSheet.create({
   textDescription:{
     fontSize : 20, 
     textAlign: 'center', 
+    marginLeft : 5,
+  },
+  icon : {
+    flexDirection: 'row',
+    alignItems : 'center',
   },
   imageCarte :{
     height : 550, 
     width: 350,
     borderRadius : 5, 
     borderWidth: 5, 
-    borderColor: "#469F9A", 
+    borderColor: "#0E5CAD", 
   }
 });
 

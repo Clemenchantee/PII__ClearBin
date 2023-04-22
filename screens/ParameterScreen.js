@@ -13,6 +13,7 @@ const ParameterScreen = ({navigation}) => {
   const [newVille, setNewVille] = useState("");
   const [villeExistante, setVilleExistante] = useState(false);
   const [villeSelectionnee, setVilleSelectionnee] = useState("");
+  //autre moyen d'importer ma collection Localisation
   const localisationRef = collection(db, "Localisation");
 
   //requête pour récupérer la base de données
@@ -41,7 +42,6 @@ const ParameterScreen = ({navigation}) => {
   
       // Ajouter la ville dans la base de données
       const docRef = await addDoc(localisationRef, { nomVille: newVille });
-      console.log("Ville ajoutée avec succès", docRef);
   
       // Mettre à jour la liste des villes
       setVilles([...villes, newVille]);

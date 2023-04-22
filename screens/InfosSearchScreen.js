@@ -50,7 +50,10 @@ const InfosSearchScreen = () => {
   
         if (poubelle) {
           const poubelleCouleur = poubelle.bac;
-          results.push({ name, description, poubelleCouleur});
+          const poubelleJour = poubelle.jour;
+          const poubelleHeure = poubelle.heure;
+          const poubelleConseil = poubelle.conseil;
+          results.push({ name, description, poubelleCouleur, poubelleJour, poubelleHeure, poubelleConseil});
         } else {
           console.log(`La poubelle avec l'id ${poubelleId} n'a pas été trouvée.`);
         }
@@ -97,6 +100,10 @@ return (
               <Text style={styles.poubelle}>{item.poubelleCouleur}</Text>
               <Text style={styles.descReponses}>Description du déchet : </Text>
               <Text style={styles.description}>{item.description}</Text>
+              <Text style={styles.descReponses}>Rappel sortie : </Text>
+              <Text style={styles.description}>{item.poubelleJour}</Text>
+              <Text style={styles.description}>{item.poubelleHeure}</Text>
+              <Text style={styles.description}>{item.poubelleConseil}</Text>
             </>
           ) : (
             <Text style={styles.noResults}>Nous ne savons pas comment trier ce déchet</Text>

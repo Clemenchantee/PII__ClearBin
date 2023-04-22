@@ -40,6 +40,14 @@ const renderPoubelle = ({ item }) => {
         <Text style={styles.itemDescription}>Que mettre dans cette poubelle ?</Text> {' '}
         {item.contenant}
       </Text>
+      <Text style={styles.itemText}>
+        <Text style={styles.itemDescription}>Jour de sortie</Text> {' '}
+        {item.jour}
+      </Text>
+      <Text style={styles.itemText}>
+        <Text style={styles.itemDescription}>Heure de sortie</Text> {' '}
+        {item.heure}
+      </Text>
       <Text style={styles.itemDescription}>Description :</Text>
       <Text style={styles.itemText}>{item.description}</Text>
     </View>
