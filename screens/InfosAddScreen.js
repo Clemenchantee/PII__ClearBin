@@ -23,21 +23,20 @@ const InfosAddScreen = () => {
               const bacs = data.map((item) => ({ nom: item.bac, value: item.id }));
               setBacs(bacs);
             } catch (error) {
-              console.log("Error fetching data: ", error);
+              console.log("Erreur dans la récupération des données : ", error);
             }
           };
         getBacs();
       }, []);
       
-  
+    //fonction pour incrémenter les données dans la base de données
     const handleSubmit = async () => {
       try {
         const nouveauDéchet = {
           nomDéchets: nomDéchets,
-          description: description,
+          description: description, 
           danger: danger,
-          poubelleRef: selectedBac ? PoubelleCollection.doc(selectedBac) : null // marche pas
-
+          bac: selectedBac ? doc(PoubelleCollection, selectedBac) : null //pour mettre les différents bacs mais marche pas mets que le bac gris 
         };
         await addDoc(déchetsCollection, nouveauDéchet);
         setNomDéchets('');
@@ -93,11 +92,15 @@ const InfosAddScreen = () => {
         />
         </View>
         
+
         <View style={styles.vueSwitchcentre}>
         <View style={styles.vueAjout}>
           <Text style={styles.descriptionAjout}>Est ce que le déchet peut être dangereux ?</Text>
-          <Text style={styles.aide}>Si oui vous pouvez cocher le bouton</Text>
-          <Switch value={danger} onValueChange={setDanger} />
+          <View style = {styles.switch}> 
+            <Text style={styles.aide}>Si oui, vous pouvez cocher le bouton : </Text>
+            {/*Bouton à cocher */}
+            <Switch value={danger} onValueChange={setDanger} />
+          </View>  
         </View>
         </View>
   
@@ -105,17 +108,19 @@ const InfosAddScreen = () => {
         <View style={styles.vueAjout}>
           <Text style={styles.descriptionAjout}>Couleur du bac</Text>
           <Picker
-                selectedValue={selectedBac}
-                onValueChange={value => setSelectedBac(value)}
-                >
-                <Picker.Item label="Sélectionner un bac" value={null} />
-                {bacs.map(bac => (
-                    <Picker.Item key={bac.value} label={bac.nom} value={bac.value} />
-                ))}
-                </Picker>
+            selectedValue={selectedBac}
+            onValueChange={value => setSelectedBac(value)}>
+            <Picker.Item label="Sélectionner un bac" value={null} />
+            {bacs.map(bac => (
+              <Picker.Item key={bac.value} label={bac.nom} value={bac.value} />
+            ))}
+          </Picker>
         </View>
-  
-        <Button style={styles.bouton} title="Ajouter le déchet" onPress={handleSubmit} />
+              
+        <View style={styles.vueAjout}> 
+          <Button style={styles.bouton} title="Ajouter le déchet" onPress={handleSubmit} />
+        </View>
+        
         </View>
       </View>
       </ScrollView>
@@ -174,6 +179,16 @@ const styles = StyleSheet.create({
       vueSwitchcentre : {
         alignItems: 'center', 
       },
+      switch : {
+        flexDirection: 'row',
+        alignItems : 'center', 
+      }, 
+      aide: {
+        fontSize : 14, 
+        textAlign: 'center', 
+        fontStyle : 'italic', 
+        color : 'gray', 
+      }, 
       vueDescription : {
         marginVertical : 10,
         marginHorizontal : 5, 
@@ -185,12 +200,7 @@ const styles = StyleSheet.create({
         marginHorizontal : 20, 
       }, 
       bouton : {
-      }, 
-      aide: {
-        fontSize : 14, 
-        textAlign: 'center', 
-        fontStyle : 'italic', 
-        color : 'gray', 
+        // faire le style du bouton
       }, 
       form : {
         fontSize : 24, 

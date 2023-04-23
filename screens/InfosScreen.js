@@ -19,7 +19,7 @@ const renderPoubelle = ({ item }) => {
     textColor = "#469F9A";
   } 
 
-  //informations dans la flatList
+  //informations dans la flatList relié à ma bdd
   return (
     <View style={styles.itemContainer}>
       <View style={styles.itemHeader}>
@@ -52,7 +52,6 @@ const renderPoubelle = ({ item }) => {
     </View>
   );
 };
-
 
 const InfosScreen = () => {
   const [poubelles, setPoubelles] = useState([]);
@@ -94,7 +93,7 @@ const InfosScreen = () => {
         renderItem={renderPoubelle}
         keyExtractor={(item) => item.bac}
         contentContainerStyle={styles.flatListContainer}
-        nestedScrollEnabled //pour pouvoir scroller la page entière
+        nestedScrollEnabled //pour pouvoir scroller la page entière sans erreur
       />
     </ScrollView>
   );  

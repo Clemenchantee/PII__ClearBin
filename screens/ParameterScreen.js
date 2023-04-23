@@ -25,7 +25,7 @@ const ParameterScreen = ({navigation}) => {
         const villes = data.map((item) => item.nomVille);
         setVilles(villes);
       } catch (error) {
-        console.log("Error fetching data: ", error);
+        console.log("Erreur dans la récupération des données : ", error);
       }
     };
     fetchData();
@@ -127,7 +127,6 @@ const ParameterScreen = ({navigation}) => {
         </View>
         <Text style={styles.text}>Made by Clémence Monnier for PII project</Text>
         <Text style={styles.text}>Cette application a été conçue dans le cadre d'un projet à l'ENSC</Text>
-        <Text style={styles.text}>Elle n'est pas commercialisable.</Text>
       </View>
     </View>
     </ScrollView>
@@ -182,8 +181,8 @@ const styles = StyleSheet.create({
     marginLeft : 5,
   }, 
   paragraphes:{
-    marginTop : 5, 
-    marginBottom : 10,
+    marginVertical : 15,
+    marginHorizontal : 10, 
   },
   villeSelect : {
     marginLeft : 10 ,
