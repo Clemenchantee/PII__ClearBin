@@ -1,7 +1,8 @@
 import React from "react";
 import { Text, View, Image, StyleSheet, ScrollView} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MapView, { Marker } from 'react-native-maps';
+// Pour la maps 
+//import MapView, { Marker } from 'react-native-maps';
 
 const MapsScreen = () => {
   
@@ -17,7 +18,7 @@ const MapsScreen = () => {
         <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
       </View>
 
-      <View  style={styles.icon}> 
+        <View  style={styles.icon}> 
           <Ionicons name="location-outline" size={30} color='#0E5CAD' />
           <Text style={styles.textDescription}>Point de collecte de verre à Bordeaux</Text>
         </View>
@@ -26,8 +27,8 @@ const MapsScreen = () => {
         <Image style={styles.imageCarte} source={require('../assets/poubelleVerre.png')} />
       </View>
 
+    {/* Tentative d'insérer une carte maps mais pas le temps d'aller jusqu'au bout du processus
       <MapView
-       // Tentative d'insérer une carte maps mais pas le temps d'aller jusqu'au bout du processus
         style={{ flex: 1 }}
         initialRegion={{
           latitude: 37.78825,
@@ -44,7 +45,8 @@ const MapsScreen = () => {
           title="Ma maps"
           description="Bordeaux"
         />
-      </MapView>
+      </MapView>*/}
+
     </View>
     </ScrollView>
   );
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
   container: { 
     flex: 1, 
     backgroundColor:"#DDF3EF",
-    padding: 10 
+    padding : 10, 
   },
   containerImage:{
     flexDirection: 'row',
@@ -83,13 +85,15 @@ const styles = StyleSheet.create({
     color : "#469F9A",
   }, 
   textDescription:{
-    fontSize : 20, 
+    fontSize : 18, 
     textAlign: 'center', 
-    marginLeft : 5,
+    marginHorizontal:5,
+    marginVertical: 5,
   },
   icon : {
     flexDirection: 'row',
     alignItems : 'center',
+    marginHorizontal : 2,
   },
   imageCarte :{
     height : 550, 

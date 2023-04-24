@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Image, TouchableOpacity, ScrollView } from "react-native";
 import Input from "../component/Input";
 import 'firebase/firestore';
 import { déchetsCollection, PoubelleCollection } from '../firebase';
@@ -65,7 +65,8 @@ const InfosSearchScreen = () => {
     
 
 return (
-  <View style={styles.container}>
+  <ScrollView style={styles.container}>
+  <View>
     <View  style={styles.containerImage}>
       <Image style={styles.image} source={require('../assets/ClearBin_App.png')} />
       <View style={styles.textContainer}>
@@ -130,6 +131,7 @@ return (
       ))
     )}
   </View>
+  </ScrollView>
 );
 };
 
